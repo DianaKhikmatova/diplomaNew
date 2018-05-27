@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Drag Drop Demo</title>
+    <!-- <link rel="stylesheet" type="text/css" href="css/style.css"> -->
+    <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.1/themes/base/jquery-ui.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/interact.js/1.2.8/interact.min.js"></script>
+    
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <!-- <script type="text/javascript" src="js/schema_script.js"></script> -->
+    <script src="http://www.google.com/jsapi" type="text/javascript"></script>
+	<script type="text/javascript">
+	    google.load("jquery", "1.4.2");
+		google.load("jqueryui", "1.7.2");
+    </script>
+     <link rel="stylesheet" href="css/style.css">
+    <script type="text/javascript" src="js/schemas.js"></script>
+</head>
+<body>
+    <div class="resizable"></div>
+    <div class="container">
+        <div id="elements" class="elements">
+            <div class="drag img-container">
+                <span class="draggable simple-text editable-text">Some text</span>
+            </div>
+            <div class="drag img-container" id="plant"></div>
+            <script>
+                document.getElementById("plant").style.background = "url('leaves.svg')";
+                document.getElementById("plant").style.backgroundRepeat = "no-repeat";
+            </script>
+        </div>
+        <div class="canvas-container">
+            <div id="canvas">
+                    <!-- <svg width="50px" height="50px" class="draggable inline-block-display" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" xmlns:xlink="http://www.w3.org/1999/xlink" enable-background="new 0 0 1000 1000">
+                        <g class="plant">
+                            <path id="plant"/>
+                        </g>
+                    </svg> -->
+            </div>
+            <div id="notes-container" class="notes-container">
+                <textarea id="notes" class="notes" placeholder="Make some notes here"></textarea>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+
+interact(".interact-resizable")
+    .resizable({
+        // resize from all edges and corners
+        edges: { left: true, right: true, bottom: true, top: true },
+
+        // keep the edges inside the parent
+        restrictEdges: {
+        outer: 'parent',
+        endOnly: true,
+        },
+
+        // minimum size
+        restrictSize: {
+        min: { width: 100, height: 50 },
+        },
+
+        inertia: true,
+    })
+    .on('resizemove', function (event) {
+        var target = event.target,
+            x = (parseFloat(target.getAttribute('data-x')) || 0),
+            y = (parseFloat(target.getAttribute('data-y')) || 0);
+
+        // update the element's style
+        target.style.width  = event.rect.width + 'px';
+        target.style.height = event.rect.height + 'px';
+
+        // translate when resizing from top or left edges
+        x += event.deltaRect.left;
+        y += event.deltaRect.top;
+
+        target.style.webkitTransform = target.style.transform =
+            'translate(' + x + 'px,' + y + 'px)';
+
+        target.setAttribute('data-x', x);
+        target.setAttribute('data-y', y);
+    // target.textContent = Math.round(event.rect.width) + '\u00D7' + Math.round(event.rect.height);
+    });
+    
+
+interact('.interact-drag')
+  .draggable({
+    onmove: window.dragMoveListener,
+    restrict: {
+      restriction: 'parent',
+      elementRect: { top: 0, left: 0, bottom: 1, right: 1 }
+    },
+  })
+  
+
+
+        
+        // target elements with the "draggable" class
+        interact('.draggable')
+        .draggable({
+            // enable inertial throwing
+            inertia: true,
+            // keep the element within the area of it's parent
+            restrict: {
+                restriction: "parent",
+                endOnly: true,
+                elementRect: { top: 0, left: 0, bottom: 1, right: 1 }
+            },
+            // call this function on every dragmove event
+            onmove: dragMoveListener,
+            // call this function on every dragend event
+        });
+        function dragMoveListener (event) {
+            var target = event.target,
+                x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx,
+                y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
+            target.style.webkitTransform =
+                target.style.transform =
+                    'translate(' + x + 'px, ' + y + 'px)';
+            target.setAttribute('data-x', x);
+            target.setAttribute('data-y', y);
+        }
+
+        function allowDrop(event) {
+        event.preventDefault();
+    }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,53 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	background-color: #F4F6F6;
+}
+	
+.wrapper {
+	width: 1200px;
+	position: relative;
+	margin: 20px auto 0;
+	height: 590px;
+	border: 1px solid #34495E;
+}
+
+.upper-slide,
+.under-slide  {
+	position: absolute;
+	background: url("2.jpg") no-repeat left center;
+	height: 100%;
+}
+
+.under-slide { 
+	width: 100%;
+}
+
+.upper-slide { 
+	width: 50%;
+	background: url("2.jpg") no-repeat left center;
+	border-right: 2px solid #3498DB;
+}
+
+.filter-1 {
+	filter: grayscale(1);
+}
+
+.filter-2 {
+	filter: sepia(0.8);
+}
+
+.filter-3 {
+	filter: blur(5px);
+}
+
+.filter-4 {
+	filter: brightness(0.8);
+}
+
+.filter-5 {
+	filter: opacity(0.5);
+}

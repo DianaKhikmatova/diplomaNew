@@ -1,0 +1,229 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+ul li {
+    list-style-type: none;
+}
+
+body {
+    font-family: verdana;
+    background-color: #F5F5F5;
+    color: #232F34;
+}
+
+.actions-container {
+    width: 900px;
+    margin: 20px auto;
+}
+.simple-block {
+    position: absolute;
+    display: inline-block;
+    width: 180px;
+    margin: 15px;
+    margin-top: 10px;
+    padding: 20px 5px;
+    border: 1px solid #aab7b8 ;
+}
+
+.simple-text {
+    text-align: center;
+    font-size: 14px;
+    font-family: "Comic Sans MS", cursive, sans-serif;
+}
+
+.selected-block {
+    background-color: #ebf5fb;
+}
+
+.default-block {
+    background-color: transparent;
+}
+
+.special {
+    position: absolute;
+    z-index: 100;
+    background-color: yellow;
+}
+svg {
+    position: absolute;
+}
+.pop-up {
+    position: absolute;
+    left: calc(50% - 225px);
+    top: 50px;
+    width: 450px;
+    padding: 25px;
+    background-color: #fff;
+    box-shadow: 0 0 10px #17202A;
+    border-radius: 2px;
+}
+
+.context-menu {
+    position: absolute;
+    width: 200px;
+    height: 100px;
+    padding: 10px;
+    background-color: #fff;
+    box-shadow: 0 0 10px #aab7b8;
+}
+
+.pop-up-background {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(23, 32, 42, 0.7);
+    z-index: 999;
+}
+
+.pop-up input, .pop-up p {
+    margin-bottom: 15px;
+} 
+
+label, .pop-up p {
+    font-family:  Verdana, Geneva, Tahoma, sans-serif;
+}
+
+/**General input settings**/
+
+.label {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.input-text {
+    width: 290px;
+    padding: 10px;
+    margin: 10px 0 10px;
+    border: 1px solid #D7DBDD; 
+    border-radius: 2px;
+}
+
+button, .button {
+    padding: 5px 15px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    border-radius: 2px;
+}
+
+.pop-up-button {
+    float: right;
+    margin-left: 15px;
+}
+
+.primary-button {
+    background-color: #F9AA32;
+    color: #fff; 
+    border: 2px solid #F9AA32;;
+}
+.simple-text {
+    text-align: center;
+    font-size: 14px;
+    font-family: "Comic Sans MS", cursive, sans-serif;
+}
+.container {
+    width: 96%;
+    margin: 0 auto;
+}
+.canvas-container {
+    display: inline-block;
+    width: 75%;
+    margin: 30px auto;
+}
+#canvas {
+    position: relative;
+    min-height: 600px;
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #E5E7E9;
+    box-shadow: 0 0 1px 1px rgba(93, 109, 126, 0.05);
+}
+.notes {
+    width: 98%;
+    height: 60px;
+    padding: 1%;
+    margin: -1px 0 0 -1px;
+    border: 1px solid #E5E7E9;
+}
+.plant {
+    fill: green;
+    z-index: 100;
+}
+.elements {
+    display: inline-block;
+    float: left;
+    width: 20%;
+    /* margin-left: 2%; */
+    margin-top: 20px;
+}
+.img-container {
+    display: inline-block;
+    float: left;
+    width: 75px;
+    height: 75px;
+    margin: 10px;
+}
+.edit-border {
+    border: 1px dashed grey;
+}
+.interact-drag {
+    cursor: move;
+}
+.interact-resizable {
+    cursor: nw-resize;
+}
+.rotatable {
+    cursor: url("rotate.png"), auto;
+}
+.draggable {
+    display: inline-block;
+    cursor: move;
+}
+.form {
+    width: 360px;
+    margin: 70px auto 0;
+    background-color: #fff;
+    border: 1px solid #E5E7E9;
+    box-shadow: 0 0 1px 1px rgba(93, 109, 126, 0.05);
+    border-radius: 2px;
+}
+
+.form-container {
+    padding: 25px;
+}
+
+.button-container {
+    /* display: flex;
+    justify-content: flex-end; */
+    margin-top: 10px;
+}
+
+.form-logo {
+    /* width: 70px;
+    height: 70px; */
+    margin: 0 auto;
+    padding: 15px;
+    background-color: #F8F9F9;
+    /* border-radius: 50%; */
+}
+
+.logo-medium {
+    width: 70px;
+    margin: 0 auto;
+    height: 70px;
+    background: url("../explain_me_logo.svg") no-repeat center;
+}
+
+.link {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    font-weight: bold;
+    color: #F9AA32;
+    text-decoration: none;
+    line-height: 40px;
+}
+
+.form-button {
+    float: right;
+}
