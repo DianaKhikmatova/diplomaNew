@@ -21,24 +21,24 @@ io.sockets.on('connection', function (socket) {
 	//creating listener of authServer			
 	socket.on('authServer', function (data) {
 		
-		console.log("LoginServer");
+		//console.log("LoginServer");
 		salt = data['login'];
 		var hash = crypto.createHmac('sha512', salt); /** Hashing algorithm sha512 */
 		hash.update(data['password']);
 		var value = hash.digest('hex');
-		console.log(value);
+		//console.log(value);
 				
 		db.prototype.isValid(data['login'], value, function(answ){
 			//giving an answer to the client. This is the dictionary.
 			//isValid actually is the answer. 
-			socket.emit('authClient', { isValid: answ });
-			console.log(answ);
+			socket.emit('authClient', { isValid: answ, id: answ['id'] });
+			// console.log(answ['id']);
 			if (answ) {
-				console.log("auth true");
+				//console.log("auth true");
 				session.isAuth = true;
 				session.login = data['login'];
 			}
-			console.log("auth end");
+		//	console.log("auth end");
 		});			
 	});
 	
@@ -55,7 +55,7 @@ io.sockets.on('connection', function (socket) {
 	});
 
 	socket.on('addUserServer', function (data) {
-		salt = data['userName'];
+		salt = data['email'];
 		let hash = crypto.createHmac('sha512', salt); /** Hashing algorithm sha512 */
 		hash.update(data['password']);
 		let valuePassord = hash.digest('hex');
