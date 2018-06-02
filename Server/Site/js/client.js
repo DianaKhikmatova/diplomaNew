@@ -66,6 +66,7 @@ function showImages() {
 		let images = data;
 		var tbody = document.getElementById('images-table').getElementsByTagName("tbody")[0];
 		for (let i = 0; i < images.length; i++) {
+			// console.log(images[i]['id'], images[i]['name'], images[i]['content'], images['library']);
 			let row = document.createElement('tr');
 			row.id = images[i]['id'];
 			let tdId = document.createElement('td');
@@ -84,6 +85,8 @@ function showImages() {
 			let tdDelete = document.createElement('td');
 			tdDelete.innerHTML = "delete";
 
+			//console.log(tdContent.childNodes[0]);
+
 			row.appendChild(tdId);
 			row.appendChild(tdName);
 			row.appendChild(tdContent);
@@ -91,47 +94,8 @@ function showImages() {
 			row.appendChild(tdDelete);
 
 			tbody.appendChild(row);
-		}		
-	});
-}
-
-function createLibrary() {
-	let libraryName = document.getElementById('library-name').value;
-	let libraryDescription = document.getElementById('library-description').value;
-	var socket = io.connect('http://localhost:8081');
-	socket.emit('addLibraryServer', { libraryName: libraryName, libraryDescription: libraryDescription });
-	socket.on('addLibraryClient', function() {
-		alert("Library created.");
-	});
-	showLibraries();
-}
-
-function showLibraries() {
-	let socket = io.connect('http://localhost:8081');
-	socket.emit('getLibraryServer', 'image');		
-	socket.on('getLibraryClient', function (data) {
-		let tbody = document.getElementById('libraries-table').getElementsByTagName("tbody")[0];
-		for (let i = 0; i < data.length; i++) {
-			let row = document.createElement('tr');
-			row.id = data[i]['id'];
-			let tdId = document.createElement('td');
-			tdId.innerHTML = '' + data[i]['id'];
-			let tdName = document.createElement('td');
-			tdName.innerHTML = data[i]['name'];
-			let tdDescription = document.createElement('td');
-			tdDescription.innerHTML = data[i]['description'];
-			let tdEdit = document.createElement('td');
-			tdEdit.innerHTML = "view / edit";
-			let tdDelete = document.createElement('td');
-			tdDelete.innerHTML = "delete";
-			
-			row.appendChild(tdId);
-			row.appendChild(tdName);
-			row.appendChild(tdDescription);
-			row.appendChild(tdEdit);
-			row.appendChild(tdDelete);
-
-			tbody.appendChild(row);
+			// let id = illnesses[i]['id']; name = illnesses[i]['name'];
+			// addRow(id, name, i);
 		}		
 	});
 }

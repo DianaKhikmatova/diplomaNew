@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Drag Drop Demo</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/interact.js/1.2.8/interact.min.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <!-- <script type="text/javascript" src="js/schema_script.js"></script> -->
+    <script type="text/javascript" src="js/schema_jquery.js"></script>
+    <script>
+        // target elements with the "draggable" class
+       interact('.draggable')
+            .draggable({
+                // enable inertial throwing
+                inertia: true,
+                // keep the element within the area of it's parent
+                restrict: {
+                    restriction: "parent",
+                    endOnly: true,
+                    elementRect: { top: 0, left: 0, bottom: 1, right: 1 }
+                },
+                // call this function on every dragmove event
+                onmove: dragMoveListener,
+                // call this function on every dragend event
+            });
+        function dragMoveListener (event) {
+            var target = event.target,
+                x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx,
+                y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
+                let currentObject, ancestorObject, currentObjectObject;
+                // finding and changing relations with ancestor node 
+                for (let i = 0; i < objectsArray.length; i++) {
+                    if (objectsArray[i].renderedObject.attr('id') === target.id) {
+                        currentObjectObject = objectsArray[i];
+                        currentObject = objectsArray[i].renderedObject;
+                        ancestorObject = objectsArray[i].ancestor;
+                        for (let j = 0; j < objectsArray[i].relationAncestorObjects.length; j++) {
+                            let svg = document.getElementById(objectsArray[i].relationAncestorObjects[0].id);
+                            if (svg !== null) {
+                                svg.parentNode.removeChild(svg);
+                            }
+                        }
+                        objectsArray[i].clearRelationAncestorObjects();
+                        drawRelation(currentObject, ancestorObject);
+                    }
+                }
+                // finding and changing relations with inheritors blocks
+                let inheritRelationsArray;
+                if (currentObjectObject.relationInheritObjects !== []) {
+                    inheritRelationsArray = currentObjectObject.relationInheritObjects;
+                }
+                console.log(inheritRelationsArray);
+
+                let inheritorsArray;
+                if (currentObjectObject.inheritors !== []) {
+                    inheritorsArray = currentObjectObject.inheritors;
+                }
+                console.log(inheritorsArray);
+
+                for (let i = 0; i < inheritRelationsArray.length; i++) {
+
+                }
+                // for (let i = 0; i < objectsArray.length; i++) {
+                //     // find blocks with current relation
+                //     for (let j = 0; j < objectsArray[i].relationInheritObjects.length; j++) {
+                //         if (objectsArray[i].relationAncestorObjects.length !== 0) {
+                //             for (let k = 0; k < inheritObjectsArray.length; k++) {
+                //                 console.log(inheritObjectsArray[k] + " " +  objectsArray[i].relationAncestorObjects[j]);
+                //                 if (inheritObjectsArray[k] === objectsArray[i].relationAncestorObjects[j]) {
+                //                     console.log("match");
+                //                 }
+                //             }
+                //            //console.log(objectsArray[i].relationAncestorObjects[j]);
+                //         }
+                //     }
+                // }
+
+            //console.log(currentObject.relationAncestorObjects);
+            //console.log(currentObject.relationInheritObjects);
+
+            target.style.webkitTransform =
+                target.style.transform =
+                    'translate(' + x + 'px, ' + y + 'px)';
+            target.setAttribute('data-x', x);
+            target.setAttribute('data-y', y);
+        }
+    </script>
+</head>
+<body>
+
+    <div class="actions-container">
+        <!-- <label>Vertical:</label>
+        <input type="number" id="vertical-number"/>
+        <label>Horizontal:</label>
+        <input type="number" id="horizontal-number"/> -->
+        <!-- <button type="button" id="create-simple-schema-btn" onclick="createSimpleSchema()">Create Simple Schema</button> -->
+        <button type="button" id="add-item">Add Item</button>
+
+        <!-- <button type="button" id="remove-item" onclick="removeItem()">Remove Item</button> -->
+        <button type="button" id="remove-item">Remove Item</button>
+        <button type="button" id="add-child">Add Child</button>
+    </div>
+
+    <div class="pop-up-background">
+        <div class="pop-up">
+            <p>Choose type of connection:</p>
+            <label for="association"><input type="radio" name="connection-type" id="association"> Association</label><br/>
+            <label for="inheritance"><input type="radio" name="connection-type" id="inheritance"> Inheritance</label><br/>
+            <label for="dependency"><input type="radio" name="connection-type" id="dependency"> Dependency</label><br/>
+            <label for="aggregation"><input type="radio" name="connection-type" id="aggregation"> Aggregation</label><br/>
+            <label for="composition"><input type="radio" name="connection-type" id="composition"> Composition</label><br/>
+            <button type="button" id="create-block" class="pop-up-button  primary-button">Create</button>
+            <button type="button" id="cancel-creation" class="pop-up-button">Cancel</button>
+        </div>
+    </div>
+
+    <div id="canvas">
+    </div>
+
+<script>
+
+
+</script>
+
+
+</body>
+</html>

@@ -31,13 +31,7 @@
 	</style>
 
 </head>
-<body onload="showLibraries()">
-<div id="create-library">
-	<input type="text" id="library-name">
-	<input type="text" id="library-description">
-	<input type='button' id='create-library' value='Create' onclick='createLibrary()'>
-	<!-- <input type="text" id="library-name"> -->
-</div>
+<body>
 <input type="file" id="fileinput"/>
 <input type='button' id='btnLoad' value='Load' onclick='addImage()'>
 <input type='button' id='btn-show' value='Show images' onclick='showImages()'>
@@ -49,20 +43,6 @@
 				<th>Name</th>
 				<th>Content</th>
 				<th>Library</th>
-				<th>Delete</th>
-			</tr>
-		</thead>
-		<tbody>
-		</tbody>
-	</table>
-
-	<table id="libraries-table">
-		<thead>
-			<tr>
-				<th>Id</th>
-				<th>Name</th>
-				<th>Description</th>
-				<th>Edit / View</th>
 				<th>Delete</th>
 			</tr>
 		</thead>

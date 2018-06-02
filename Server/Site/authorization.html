@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Sketch App</title>
+    <meta charset="utf-8">
+    <meta name="description" content="...">
+    <meta name="keywords" content="...">
+    <link rel="stylesheet" href="css/style.css">
+	
+	<script src="http://code.jquery.com/jquery-latest.js"></script>
+	<script src="https://cdn.socket.io/socket.io-1.2.1.js"></script>
+	<script src="./js/auth.js"></script>
+	<style>
+		body {
+			background-color: #232F34;
+		}
+	</style>
+</head>
+
+<!--Exit the session-->
+<body onload="exit()">
+<div class="form">
+	<form id="form_login">
+		<div class="form-logo"><div class="logo-medium"></div></div>
+		<div class="form-container">
+			<label for="login" class="label">Email</label>
+			<input id="email" class="input-text" placeholder="Email" autofocus required>  <br/> 
+			<label for="password" class="label">Password</label>
+			<input id="password" class="input-text" type="password" placeholder="Password" required><br/>
+			<div class="button-container">
+				<a href="registration.html" class="link">Register</a>  
+				<input type="button" class="button primary-button form-button" id="submit" value="Log in" onClick="auth()">
+			</div>
+		</div>
+      <div id="picture"></div>
+	</form>
+</div>
+</body>
+</html>

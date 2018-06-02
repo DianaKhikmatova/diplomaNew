@@ -66,6 +66,33 @@ io.sockets.on('connection', function (socket) {
 			socket.emit('addUserClient', {});
 		});			
 	});
-	
+
+	socket.on('addImageServer', function (data) {
+		// console.log(data['imageContent'] + " server");
+		db.prototype.addNewImage(data['imageName'], data['imageContent'], function(answer){
+			socket.emit('addImageClient', { imageName: data['imageName'], imageContent: data['imageContent'] });
+		});			
+	});
+
+	socket.on('getImagesServer', function (data) {
+		db.prototype.getTable(function(data, content) {
+			content = '' + content;
+			socket.emit('getImagesClient', data, content);
+		});
+	});
+
+	socket.on('addLibraryServer', function (data) {
+		db.prototype.addNewLibrary(data['libraryName'], data['libraryDescription'], function(answer){
+			socket.emit('addLibraryClient', { imageName: data['imageName'], imageContent: data['imageContent'] });
+		});			
+	});
+
+	socket.on('getLibraryServer', function (data) {
+		db.prototype.getTable(function(data) {
+			// console.log(data[0]['name'], data[0]['description']);
+			socket.emit('getLibraryClient', data);
+		});
+	});
+
 });
 

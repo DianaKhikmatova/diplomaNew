@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script>        
+	let blob = "123";
+	let fr = new FileReader();
+  function handleFileSelect()
+  {               
+    if (!window.File || !window.FileReader || !window.FileList || !window.Blob) {
+      alert('The File APIs are not fully supported in this browser.');
+      return;
+    }   
+
+    input = document.getElementById('fileinput');
+    if (!input) {
+      alert("Um, couldn't find the fileinput element.");
+    }
+    else if (!input.files) {
+      alert("This browser doesn't seem to support the `files` property of file inputs.");
+    }
+    else if (!input.files[0]) {
+      alert("Please select a file before clicking 'Load'");               
+    }
+    else {
+      file = input.files[0];
+      fr.onload = receivedText;
+      //fr.readAsText(file);
+      fr.readAsDataURL(file);
+    }
+  }
+
+  function receivedText() {
+    blob = fr.result;
+	console.log(fr.result);
+    document.getElementById('editor').appendChild(document.createTextNode(fr.result));
+	loadImage();
+  }           
+
+  function loadImage() {
+  
+  var image = document.createElement('img');
+    
+	image.src=blob;
+	image.width=100;
+	image.height=100;
+	image.alt="here should be some image";
+		
+	document.body.appendChild(image);
+	}
+</script>
+</head>
+<body>
+<input type="file" id="fileinput"/>
+<input type='button' id='btnLoad' value='Load' onclick='handleFileSelect();'>
+<div id="editor"></div>
+</body>
+</html>

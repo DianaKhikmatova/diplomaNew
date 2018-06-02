@@ -41,3 +41,47 @@ Database.prototype.addNewUser = function(userName, email, password, callback) {
 			}.bind(this));			
     }.bind(this));
 }
+
+Database.prototype.addNewImage = function(imageName, imageContent, callback) {
+    _pool.getConnection(function(err, connection){		
+        	console.log(imageContent + " user");
+			connection.query("INSERT INTO image (name, content) VALUES (?, ?)", [imageName, imageContent], function(err, result) {
+                connection.release();
+                if (err) throw err;
+                callback(result.insertId);
+			}.bind(this));			
+    }.bind(this));
+}
+
+Database.prototype.getTable = function(callback) {
+    _pool.getConnection(function(err, connection){		
+        connection.query(
+			"SELECT * FROM image", function(err, rows, fields) {
+            connection.release();
+            if (err) throw err;
+			callback(rows, rows[0]['content']);
+        }.bind(this));
+    }.bind(this));
+}
+
+Database.prototype.addNewLibrary = function(libraryName, descriptionName, callback) {
+    _pool.getConnection(function(err, connection){		
+        	console.log(libraryName + " " +  descriptionName + " DB");
+			connection.query("INSERT INTO library (name, description) VALUES (?, ?)", [libraryName, descriptionName], function(err, result) {
+                connection.release();
+                if (err) throw err;
+                callback(result.insertId);
+			}.bind(this));			
+    }.bind(this));
+}
+
+Database.prototype.getTable = function(callback) {
+    _pool.getConnection(function(err, connection){		
+        connection.query(
+			"SELECT * FROM library", function(err, rows, fields) {
+            connection.release();
+            if (err) throw err;
+			callback(rows);
+        }.bind(this));
+    }.bind(this));
+}
