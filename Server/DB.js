@@ -53,6 +53,16 @@ Database.prototype.addNewImage = function(imageName, imageContent, libraryId, ca
     }.bind(this));
 }
 
+Database.prototype.addNewFunction = function(functionName, functionContent, libraryId, callback) {
+    _pool.getConnection(function(err, connection){		
+			connection.query("INSERT INTO function (name, content, library_id) VALUES (?, ?, ?)", [functionName, functionContent, libraryId], function(err, result) {
+                connection.release();
+                if (err) throw err;
+                callback(result.insertId);
+			}.bind(this));			
+    }.bind(this));
+}
+
 Database.prototype.getTableImage = function(id, callback) {
     _pool.getConnection(function(err, connection){		
         connection.query(
@@ -60,10 +70,24 @@ Database.prototype.getTableImage = function(id, callback) {
             connection.release();
             if (err) throw err;
             if (rows.length === 0) {
-                console.log('empty');
                 callback(rows, '');
             } else {
                 callback(rows, rows[0]['content']);
+            }
+        }.bind(this));
+    }.bind(this));
+}
+
+Database.prototype.getTableFunction = function(id, callback) {
+    _pool.getConnection(function(err, connection){		
+        connection.query(
+			"SELECT * FROM function WHERE library_id=?", [id], function(err, rows, fields) {
+            connection.release();
+            if (err) throw err;
+            if (rows.length === 0) {
+                callback(rows, '');
+            } else {
+                callback(rows);
             }
         }.bind(this));
     }.bind(this));
@@ -106,6 +130,17 @@ Database.prototype.removeImage = function(id, callback) {
     _pool.getConnection(function(err, connection){		
         connection.query(
 			"DELETE FROM image WHERE id=?", id, function(err, rows, fields) {
+            connection.release();
+            if (err) throw err;
+			callback(rows);
+        }.bind(this));
+    }.bind(this));
+}
+
+Database.prototype.removeFunction = function(id, callback) {
+    _pool.getConnection(function(err, connection){		
+        connection.query(
+			"DELETE FROM function WHERE id=?", id, function(err, rows, fields) {
             connection.release();
             if (err) throw err;
 			callback(rows);

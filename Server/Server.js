@@ -74,17 +74,32 @@ io.sockets.on('connection', function (socket) {
 		});			
 	});
 
+	socket.on('addFunctionServer', function (data) {
+		db.prototype.addNewFunction(data['functionName'], data['functionContent'], data['libraryId'], function(answer){
+			socket.emit('addFunctionClient', { imageName: data['functionName'], imageContent: data['functionContent'], libraryId: data['libraryId'] });
+		});			
+	});
+
 	socket.on('getImagesServer', function (data) {
 		console.log(data['id']);
 		db.prototype.getTableImage(data['id'], function(data, content) {
-			content = '' + content;
+			console.log(data.length);
+			for (let i = 0; i < data.length; i++) {
+				data[i]['content'] = '' + data[i]['content'];
+			}
 			socket.emit('getImagesClient', data, content);
+		});
+	});
+
+	socket.on('getFunctionsServer', function (data) {
+		db.prototype.getTableFunction(data['id'], function(data) {
+			socket.emit('getFunctionsClient', data);
 		});
 	});
 
 	socket.on('addLibraryServer', function (data) {
 		db.prototype.addNewLibrary(data['libraryName'], data['libraryDescription'], function(answer){
-			socket.emit('addLibraryClient', { imageName: data['imageName'], imageContent: data['imageContent'] });
+			socket.emit('addLibraryClient', { libraryName: data['libraryName'], libraryDescription: data['libraryDescription'] });
 		});			
 	});
 
@@ -104,6 +119,12 @@ io.sockets.on('connection', function (socket) {
 	socket.on('removeImageServer', function (data) {
 		db.prototype.removeImage(data['id'], function(answer) {
 			socket.emit('removeImageClient');
+		});
+	});
+
+	socket.on('removeFunctionServer', function (data) {
+		db.prototype.removeFunction(data['id'], function(answer) {
+			socket.emit('removeFunctionClient');
 		});
 	});
 

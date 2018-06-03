@@ -231,3 +231,49 @@ button, .button {
 .form-button {
     float: right;
 }
+
+#image-container, #library-container {
+    display: inline-block;
+    float: left;
+    width: 45%;
+    padding: 20px 2.3%; 
+    margin-top: 20px;
+    min-height: calc(100vh - 60px);
+    background-color: #fff;
+    box-shadow: 0 0 1px 1px rgba(93, 109, 126, 0.05);
+} 
+#image-container {
+    float: right;
+}
+#library-container {
+    float: left;
+}
+table {
+    font-size: 14px;
+    border-collapse: collapse;
+    margin: 15px 0 30px;
+}
+td, th {
+    width: 22%;
+    padding: 10px;
+    text-align: left;
+}
+tr {
+    border-bottom: 1px solid #D7DBDD;
+}
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+.table-action {
+    color: #2E86C1;
+    cursor: pointer;
+}
+.table-action:hover {
+    color: #5DADE2;
+}
+.hidden {
+    visibility: hidden;
+}
+.visible {
+    visibility: visible;
+}
