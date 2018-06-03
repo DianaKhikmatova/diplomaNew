@@ -42,10 +42,10 @@ Database.prototype.addNewUser = function(userName, email, password, callback) {
     }.bind(this));
 }
 
-Database.prototype.addNewImage = function(imageName, imageContent, callback) {
+Database.prototype.addNewImage = function(imageName, imageContent, libraryId, callback) {
     _pool.getConnection(function(err, connection){		
         	console.log(imageContent + " user");
-			connection.query("INSERT INTO image (name, content) VALUES (?, ?)", [imageName, imageContent], function(err, result) {
+			connection.query("INSERT INTO image (name, content, library_id) VALUES (?, ?, ?)", [imageName, imageContent, libraryId], function(err, result) {
                 connection.release();
                 if (err) throw err;
                 callback(result.insertId);
@@ -53,13 +53,18 @@ Database.prototype.addNewImage = function(imageName, imageContent, callback) {
     }.bind(this));
 }
 
-Database.prototype.getTable = function(callback) {
+Database.prototype.getTableImage = function(id, callback) {
     _pool.getConnection(function(err, connection){		
         connection.query(
-			"SELECT * FROM image", function(err, rows, fields) {
+			"SELECT * FROM image WHERE library_id=?", [id], function(err, rows, fields) {
             connection.release();
             if (err) throw err;
-			callback(rows, rows[0]['content']);
+            if (rows.length === 0) {
+                console.log('empty');
+                callback(rows, '');
+            } else {
+                callback(rows, rows[0]['content']);
+            }
         }.bind(this));
     }.bind(this));
 }
@@ -75,10 +80,32 @@ Database.prototype.addNewLibrary = function(libraryName, descriptionName, callba
     }.bind(this));
 }
 
-Database.prototype.getTable = function(callback) {
+Database.prototype.getTableLibrary = function(callback) {
     _pool.getConnection(function(err, connection){		
         connection.query(
 			"SELECT * FROM library", function(err, rows, fields) {
+            connection.release();
+            if (err) throw err;
+			callback(rows);
+        }.bind(this));
+    }.bind(this));
+}
+
+Database.prototype.removeLibrary = function(id, callback) {
+    _pool.getConnection(function(err, connection){		
+        connection.query(
+			"DELETE FROM library WHERE id=?", id, function(err, rows, fields) {
+            connection.release();
+            if (err) throw err;
+			callback(rows);
+        }.bind(this));
+    }.bind(this));
+}
+
+Database.prototype.removeImage = function(id, callback) {
+    _pool.getConnection(function(err, connection){		
+        connection.query(
+			"DELETE FROM image WHERE id=?", id, function(err, rows, fields) {
             connection.release();
             if (err) throw err;
 			callback(rows);

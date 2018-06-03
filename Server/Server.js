@@ -68,14 +68,15 @@ io.sockets.on('connection', function (socket) {
 	});
 
 	socket.on('addImageServer', function (data) {
-		// console.log(data['imageContent'] + " server");
-		db.prototype.addNewImage(data['imageName'], data['imageContent'], function(answer){
-			socket.emit('addImageClient', { imageName: data['imageName'], imageContent: data['imageContent'] });
+		console.log(data['libraryId'] + " server");
+		db.prototype.addNewImage(data['imageName'], data['imageContent'], data['libraryId'], function(answer){
+			socket.emit('addImageClient', { imageName: data['imageName'], imageContent: data['imageContent'], libraryId: data['libraryId'] });
 		});			
 	});
 
 	socket.on('getImagesServer', function (data) {
-		db.prototype.getTable(function(data, content) {
+		console.log(data['id']);
+		db.prototype.getTableImage(data['id'], function(data, content) {
 			content = '' + content;
 			socket.emit('getImagesClient', data, content);
 		});
@@ -88,9 +89,21 @@ io.sockets.on('connection', function (socket) {
 	});
 
 	socket.on('getLibraryServer', function (data) {
-		db.prototype.getTable(function(data) {
+		db.prototype.getTableLibrary(function(data) {
 			// console.log(data[0]['name'], data[0]['description']);
 			socket.emit('getLibraryClient', data);
+		});
+	});
+
+	socket.on('removeLibraryServer', function (data) {
+		db.prototype.removeLibrary(data['id'], function(answer) {
+			socket.emit('removeLibraryClient', data);
+		});
+	});
+
+	socket.on('removeImageServer', function (data) {
+		db.prototype.removeImage(data['id'], function(answer) {
+			socket.emit('removeImageClient');
 		});
 	});
 
