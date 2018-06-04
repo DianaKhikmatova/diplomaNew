@@ -218,6 +218,13 @@ button, .button {
     background: url("../explain_me_logo.svg") no-repeat center;
 }
 
+.logo-small {
+    width: 50px;
+    margin: 0 auto;
+    height: 50px;
+    background: url("../explain_me_logo.svg") no-repeat center;
+}
+
 .link {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 13px;
@@ -291,4 +298,32 @@ tr:nth-child(even) {
 }
 .library-header:hover {
     background-color: #E5E7E9;
+}
+.header {
+    width: 100%;
+    padding: 2px 0;
+    background-color: #fff;
+    border: 1px solid #D7DBDD; 
+    box-shadow: 3px 0 1px 1px rgba(93, 109, 126, 0.05);
+}
+.header-logo {
+    width: 80px;
+    display: inline-block;
+    margin-top: -10px;
+}
+.user, .help {
+    display: inline-block;
+    float: right;
+    margin-left: 30px;
+}
+.header a {
+    display: inline-block;
+    margin-top: 15px;
+    color: #F9AA32;
+    text-decoration: none;
+    font-family: 'PT Sans';
+    font-weight: bold;
+}
+#user-image-container {
+    margin-top: 20px;
 }

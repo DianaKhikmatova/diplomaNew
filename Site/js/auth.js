@@ -14,6 +14,8 @@ function auth() {
 			// alert(data['id']);
 			console.log("success");
 			if (data['isValid']['role'] === "user") {
+				window.localStorage.setItem('id', data['isValid']['id']);
+				console.log(window.localStorage.getItem('id'));
 				document.location.href = "./schemas.html";
 			} else {
 				document.location.href = "./admin.html";

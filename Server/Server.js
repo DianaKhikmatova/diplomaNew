@@ -82,7 +82,6 @@ io.sockets.on('connection', function (socket) {
 
 	socket.on('getImagesServer', function (data) {
 		db.prototype.getTableImage(data['id'], function(answer, content) {
-			console.log(answer.length + '-----------------------------------------------------------------------------');
 			for (let i = 0; i < answer.length; i++) {
 				answer[i]['content'] = '' + answer[i]['content'];
 			}
@@ -93,6 +92,12 @@ io.sockets.on('connection', function (socket) {
 	socket.on('getFunctionsServer', function (data) {
 		db.prototype.getTableFunction(data['id'], function(data) {
 			socket.emit('getFunctionsClient', data);
+		});
+	});
+
+	socket.on('getUserLibraryServer', function (data) {
+		db.prototype.getUserLibrary(data['id'], function(answer) {
+			socket.emit('getUserLibraryClient', answer);
 		});
 	});
 

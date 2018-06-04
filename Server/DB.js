@@ -37,7 +37,8 @@ Database.prototype.addNewUser = function(userName, email, password, callback) {
 			// ...
             connection.release();
             if (err) throw err;
-			callback(result.insertId);
+            callback(result.insertId);
+            this.addNewUserLibrary(result.insertId);
 			}.bind(this));			
     }.bind(this));
 }
@@ -78,6 +79,17 @@ Database.prototype.getTableImage = function(id, callback) {
     }.bind(this));
 }
 
+Database.prototype.getUserLibrary = function(id, callback) {
+    _pool.getConnection(function(err, connection){		
+        connection.query(
+			"SELECT id FROM library WHERE id_user=?", [id], function(err, rows, fields) {
+            connection.release();
+            if (err) throw err;
+            callback(rows);
+        }.bind(this));
+    }.bind(this));
+}
+
 Database.prototype.getTableFunction = function(id, callback) {
     _pool.getConnection(function(err, connection){		
         connection.query(
@@ -97,6 +109,18 @@ Database.prototype.addNewLibrary = function(libraryName, descriptionName, callba
     _pool.getConnection(function(err, connection){		
         	console.log(libraryName + " " +  descriptionName + " DB");
 			connection.query("INSERT INTO library (name, description) VALUES (?, ?)", [libraryName, descriptionName], function(err, result) {
+                connection.release();
+                if (err) throw err;
+                callback(result.insertId);
+			}.bind(this));			
+    }.bind(this));
+}
+
+Database.prototype.addNewUserLibrary = function(user, callback) {
+    _pool.getConnection(function(err, connection){		
+            let libraryName = 'library';
+            let descriptionName = 'user library';
+			connection.query("INSERT INTO library (name, description, id_user) VALUES (?, ?, ?)", [libraryName, descriptionName, user], function(err, result) {
                 connection.release();
                 if (err) throw err;
                 callback(result.insertId);
