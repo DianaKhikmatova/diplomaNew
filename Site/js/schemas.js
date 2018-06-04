@@ -26,16 +26,16 @@ let select = function (event) {
 
 document.addEventListener('DOMContentLoaded', function () {
 
-    let imgsArray = ["1.svg", "2.svg", "3.svg", "4.svg", "5.svg"];
-    for (let i = 0; i < imgsArray.length; i++) {
-        let div = document.createElement("div");
-        div.classList.add("drag");
-        div.classList.add("img-container");
-        div.classList.add("ui-draggable");
-        div.id = imgsArray[i];
-        div.style.background = 'url("img/' + imgsArray[i] + '") no-repeat';
-        document.getElementById("elements").appendChild(div);
-    }
+    // let imgsArray = ["1.svg", "2.svg", "3.svg", "4.svg", "5.svg"];
+    // for (let i = 0; i < imgsArray.length; i++) {
+    //     let div = document.createElement("div");
+    //     div.classList.add("drag");
+    //     div.classList.add("img-container");
+    //     div.classList.add("ui-draggable");
+    //     div.id = imgsArray[i];
+    //     div.style.background = 'url("img/' + imgsArray[i] + '") no-repeat';
+    //     document.getElementById("elements").appendChild(div);
+    // }
 
     $(document).keydown(function (e) {
         let currentZIndex = 0;

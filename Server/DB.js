@@ -115,6 +115,17 @@ Database.prototype.getTableLibrary = function(callback) {
     }.bind(this));
 }
 
+Database.prototype.getLibraries = function(callback) {
+    _pool.getConnection(function(err, connection){		
+        connection.query(
+			"SELECT * FROM library", function(err, rows, fields) {
+            connection.release();
+            if (err) throw err;
+			callback(rows);
+        }.bind(this));
+    }.bind(this));
+}
+
 Database.prototype.removeLibrary = function(id, callback) {
     _pool.getConnection(function(err, connection){		
         connection.query(

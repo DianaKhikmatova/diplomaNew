@@ -81,13 +81,12 @@ io.sockets.on('connection', function (socket) {
 	});
 
 	socket.on('getImagesServer', function (data) {
-		console.log(data['id']);
-		db.prototype.getTableImage(data['id'], function(data, content) {
-			console.log(data.length);
-			for (let i = 0; i < data.length; i++) {
-				data[i]['content'] = '' + data[i]['content'];
+		db.prototype.getTableImage(data['id'], function(answer, content) {
+			console.log(answer.length + '-----------------------------------------------------------------------------');
+			for (let i = 0; i < answer.length; i++) {
+				answer[i]['content'] = '' + answer[i]['content'];
 			}
-			socket.emit('getImagesClient', data, content);
+			socket.emit('getImagesClient' + data['id'], answer, content);
 		});
 	});
 
@@ -107,6 +106,12 @@ io.sockets.on('connection', function (socket) {
 		db.prototype.getTableLibrary(function(data) {
 			// console.log(data[0]['name'], data[0]['description']);
 			socket.emit('getLibraryClient', data);
+		});
+	});
+
+	socket.on('getLibrariesUserServer', function (data) {
+		db.prototype.getLibraries(function(data) {
+			socket.emit('getLibraryUserClient', data);
 		});
 	});
 

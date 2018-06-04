@@ -163,7 +163,6 @@ button, .button {
 }
 .img-container {
     display: inline-block;
-    float: left;
     width: 75px;
     height: 75px;
     margin: 10px;
@@ -276,4 +275,20 @@ tr:nth-child(even) {
 }
 .visible {
     visibility: visible;
+}
+
+.library-container {
+    width: 80%;
+}
+.library-header {
+    width: 100%;
+    padding: 15px 20px;
+    background-color: #D7DBDD;
+    color: #17202A;
+    border: 1px solid #aab7b8;
+    margin-top: -1px;
+    cursor: pointer;
+}
+.library-header:hover {
+    background-color: #E5E7E9;
 }
