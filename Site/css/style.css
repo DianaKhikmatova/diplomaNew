@@ -111,12 +111,18 @@ button, .button {
     border-radius: 2px;
 }
 
+.function-button {
+    width: 100%;
+    margin-bottom: 5px;
+}
+
 .pop-up-button {
     float: right;
     margin-left: 15px;
 }
 
 .primary-button {
+    text-align: center;
     background-color: #F9AA32;
     color: #fff; 
     border: 2px solid #F9AA32;;
@@ -133,11 +139,11 @@ button, .button {
 .canvas-container {
     display: inline-block;
     width: 75%;
-    margin: 30px auto;
+    margin: 10px auto;
 }
 #canvas {
     position: relative;
-    min-height: 600px;
+    min-height: 400px;
     padding: 20px;
     background-color: #fff;
     border: 1px solid #E5E7E9;

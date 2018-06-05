@@ -80,6 +80,13 @@ io.sockets.on('connection', function (socket) {
 		});			
 	});
 
+	socket.on('addFileServer', function (data) {
+		db.prototype.addNewFile(data['fileName'], data['fileContent'], data['userId'], function(answer){
+			console.log(answer);
+			socket.emit('addFileClient', { fileName: data['fileName'], fileContent: data['fileContent'], fileId: data['userId'] });
+		});			
+	});
+
 	socket.on('getImagesServer', function (data) {
 		db.prototype.getTableImage(data['id'], function(answer, content) {
 			for (let i = 0; i < answer.length; i++) {
@@ -90,8 +97,14 @@ io.sockets.on('connection', function (socket) {
 	});
 
 	socket.on('getFunctionsServer', function (data) {
-		db.prototype.getTableFunction(data['id'], function(data) {
-			socket.emit('getFunctionsClient', data);
+		db.prototype.getTableFunction(data['id'], function(answer) {
+			socket.emit('getFunctionsClient' + data['id'], answer);
+		});
+	});
+
+	socket.on('getFilesServer', function (data) {
+		db.prototype.getTableFile(data['id'], function(answer) {
+			socket.emit('getFilesClient' + data['id'], answer);
 		});
 	});
 
@@ -135,6 +148,12 @@ io.sockets.on('connection', function (socket) {
 	socket.on('removeFunctionServer', function (data) {
 		db.prototype.removeFunction(data['id'], function(answer) {
 			socket.emit('removeFunctionClient');
+		});
+	});
+
+	socket.on('removeFileServer', function (data) {
+		db.prototype.removeFile(data['id'], function(answer) {
+			socket.emit('removeFileClient');
 		});
 	});
 

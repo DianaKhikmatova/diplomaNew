@@ -59,6 +59,17 @@ Database.prototype.addNewFunction = function(functionName, functionContent, libr
 			connection.query("INSERT INTO function (name, content, library_id) VALUES (?, ?, ?)", [functionName, functionContent, libraryId], function(err, result) {
                 connection.release();
                 if (err) throw err;
+                console.log(result.insertId + ' DDDDDDDDDDBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB');
+                callback(result.insertId);
+			}.bind(this));			
+    }.bind(this));
+}
+
+Database.prototype.addNewFile = function(fileName, fileContent, userId, callback) {
+    _pool.getConnection(function(err, connection){		
+			connection.query("INSERT INTO file (name, content, id_user) VALUES (?, ?, ?)", [fileName, fileContent, userId], function(err, result) {
+                connection.release();
+                if (err) throw err;
                 callback(result.insertId);
 			}.bind(this));			
     }.bind(this));
@@ -101,6 +112,17 @@ Database.prototype.getTableFunction = function(id, callback) {
             } else {
                 callback(rows);
             }
+        }.bind(this));
+    }.bind(this));
+}
+
+Database.prototype.getTableFile = function(id, callback) {
+    _pool.getConnection(function(err, connection){		
+        connection.query(
+			"SELECT * FROM file WHERE id_user=?", [id], function(err, rows, fields) {
+            connection.release();
+            if (err) throw err;
+            callback(rows);
         }.bind(this));
     }.bind(this));
 }
@@ -176,6 +198,17 @@ Database.prototype.removeFunction = function(id, callback) {
     _pool.getConnection(function(err, connection){		
         connection.query(
 			"DELETE FROM function WHERE id=?", id, function(err, rows, fields) {
+            connection.release();
+            if (err) throw err;
+			callback(rows);
+        }.bind(this));
+    }.bind(this));
+}
+
+Database.prototype.removeFile = function(id, callback) {
+    _pool.getConnection(function(err, connection){		
+        connection.query(
+			"DELETE FROM file WHERE id=?", id, function(err, rows, fields) {
             connection.release();
             if (err) throw err;
 			callback(rows);

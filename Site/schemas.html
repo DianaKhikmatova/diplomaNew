@@ -47,12 +47,11 @@
         </div>
 
         <div class="canvas-container">
+            <div class="save">
+                <input type="text" id="version-name" placeholder="Name" class="input-text">
+                <input type="button" id="save-button" value="Save" class="button primary-button" onclick="save()">
+            </div>
             <div id="canvas">
-                    <!-- <svg width="50px" height="50px" class="draggable inline-block-display" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" xmlns:xlink="http://www.w3.org/1999/xlink" enable-background="new 0 0 1000 1000">
-                        <g class="plant">
-                            <path id="plant"/>
-                        </g>
-                    </svg> -->
             </div>
             <div id="notes-container" class="notes-container">
                 <textarea id="notes" class="notes" placeholder="Make some notes here"></textarea>

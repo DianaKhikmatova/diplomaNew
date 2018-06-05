@@ -300,7 +300,6 @@ function getImagesClient() {
 			socket.emit('getImagesServer', {id: containers[i].id});
 			let c = 0;
 			socket.on('getImagesClient' + containers[i].id, function (data, content) {
-				console.log('message ' + c++);
 				//console.log(data.length);
 				for (let j = 0; j < data.length; j++) {
 					let imageContainer = document.createElement('img');
@@ -321,8 +320,46 @@ function getImagesClient() {
 				initializeListeners();
 				
 			});
+			socket.emit('getFunctionsServer', {id: containers[i].id});
+			socket.on('getFunctionsClient' + containers[i].id, function (data, content) {
+				console.log(data.length);
+				for (let j = 0; j < data.length; j++) {
+					let button = document.createElement('input');
+					button.setAttribute('type', 'button');
+					button.setAttribute('value', data[j]['name']);
+					button.classList.add('button');
+					button.classList.add('function-button');
+					button.addEventListener('click', function() {
+						window.localStorage.setItem('functionContent', data[j]['content']);
+						goTo('./function.html');
+					}, false);
+					button.id = data[j]['id'] + 'function';
+					//button.setAttribute('value', 'button');
+					document.getElementById(containers[i].id).appendChild(button);
+				}
+				
+			});
 		}	
 	});
+}
+
+function goTo(url) {
+	document.location.href = url;
+}
+
+function save() {
+	let name = document.getElementById('version-name').value;
+	let content = document.getElementById('canvas').innerHTML;
+	var socket = io.connect('http://localhost:8081');
+	if (name !== "") {
+		socket.emit('addFileServer', { fileName: name, fileContent: content, userId: window.localStorage.getItem('id')});
+	socket.on('addFileClient', function(data) {
+		console.log(data);
+	});
+	} else {
+		alert('Enter file name first');
+	}
+
 }
 
 function addImage(id) {
@@ -401,7 +438,7 @@ function addUser() {
 function showFunctions(id) {
 	var socket = io.connect('http://localhost:8081');
 	socket.emit('getFunctionsServer', {id: id} );		
-	socket.on('getFunctionsClient', function (data, content) {
+	socket.on('getFunctionsClient' + id, function (data, content) {
 		var tbody = document.getElementById('functions-table').getElementsByTagName("tbody")[0];
 		while (tbody.hasChildNodes()) {
 			tbody.removeChild(tbody.lastChild);

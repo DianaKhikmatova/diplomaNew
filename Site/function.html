@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Sketch App</title>
+    <meta charset="utf-8">
+    <script src="https://cdn.socket.io/socket.io-1.2.1.js"></script>
+    <script src="./js/client.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/interact.js/1.2.8/interact.min.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+</head>
+
+<!--Exit the session-->
+<body>
+    <script>
+        var page = window.localStorage.getItem('functionContent');
+        if (page) {
+                document.documentElement.innerHTML = page;
+        }
+        let scripts = document.getElementsByTagName('script');
+        for (let i = 0; i < scripts.length; i++) {
+            console.log(scripts[i].innerHTML);
+            eval(scripts[i].innerHTML);
+        }
+    </script>
+</body>
+</html>
