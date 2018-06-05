@@ -120,6 +120,11 @@ function showFiles(id) {
 			tdId.innerHTML = '' + data[i]['id'];
 			let tdName = document.createElement('td');
 			tdName.innerHTML = data[i]['name'];
+			tdName.classList.add('table-action');
+			tdName.addEventListener('click', function() {
+				window.localStorage.setItem('state', data[i]['content']);
+				document.location.href = "./schemas.html";
+			}, false);
 			let tdDelete = document.createElement('td');
 			tdDelete.innerHTML = "delete";
 			tdDelete.classList.add('table-action');

@@ -1,33 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Drag Drop Demo</title>
     <!-- <link rel="stylesheet" type="text/css" href="css/style.css"> -->
-    <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.1/themes/base/jquery-ui.css"/>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/interact.js/1.2.8/interact.min.js"></script>
-    
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-    <!-- <script type="text/javascript" src="js/schema_script.js"></script> -->
-    <script src="http://www.google.com/jsapi" type="text/javascript"></script>
-    
-    <script src="https://cdn.socket.io/socket.io-1.2.1.js"></script>
-    <script src="./js/client.js"></script>
-    
-	<script type="text/javascript">
-	    google.load("jquery", "1.4.2");
-		google.load("jqueryui", "1.7.2");
-    </script>
-     <link rel="stylesheet" href="css/style.css">
-    <script type="text/javascript" src="js/schemas.js"></script>
+
 </head>
+
 <body>
     <div class="header">
         <div class="container">
-            <div class="header-logo"><a href="schemas.html"><div class="logo-small"></div></a></div>
+            <div class="header-logo">
+                <a href="schemas.html">
+                    <div class="logo-small"></div>
+                </a>
+            </div>
             <!-- <div class="home"><a href="schemas.html">Home</a></div> -->
-            <div class="user"><a href="user.html">User</a></div>
-            <div class="help"><a href="#">Help</a></div>
+            <div class="user">
+                <a href="user.html">User</a>
+            </div>
+            <div class="help">
+                <a href="#">Help</a>
+            </div>
         </div>
     </div>
     <div class="resizable"></div>
@@ -62,84 +57,117 @@
 
     <script>
 
-interact(".interact-resizable")
-    .resizable({
-        // resize from all edges and corners
-        edges: { left: true, right: true, bottom: true, top: true },
+        if (window.localStorage.getItem('state')) {
+            document.getElementById('canvas').innerHTML = window.localStorage.getItem('state');
+            window.localStorage.removeItem('state');
+        }
+    </script>
 
-        // keep the edges inside the parent
-        restrictEdges: {
-        outer: 'parent',
-        endOnly: true,
-        },
+    <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.1/themes/base/jquery-ui.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/interact.js/1.2.8/interact.min.js"></script>
 
-        // minimum size
-        restrictSize: {
-        min: { width: 100, height: 50 },
-        },
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <!-- <script type="text/javascript" src="js/schema_script.js"></script> -->
+    <script src="http://www.google.com/jsapi" type="text/javascript"></script>
 
-        inertia: true,
-    })
-    .on('resizemove', function (event) {
-        var target = event.target,
-            x = (parseFloat(target.getAttribute('data-x')) || 0),
-            y = (parseFloat(target.getAttribute('data-y')) || 0);
+    <script src="https://cdn.socket.io/socket.io-1.2.1.js"></script>
+    <script src="./js/client.js"></script>
 
-        // update the element's style
-        target.style.width  = event.rect.width + 'px';
-        target.style.height = event.rect.height + 'px';
+    <script type="text/javascript">
+        google.load("jquery", "1.4.2");
+        google.load("jqueryui", "1.7.2");
+    </script>
+    <link rel="stylesheet" href="css/style.css">
+    <script type="text/javascript" src="js/schemas.js"></script>
 
-        // translate when resizing from top or left edges
-        x += event.deltaRect.left;
-        y += event.deltaRect.top;
+    <script>
+        // let divs = document.getElementById('canvas').childNodes;
+        // for (let i = 0; i < divs.length; i++) {
+        //     divs[i].
+        // }
 
-        target.style.webkitTransform = target.style.transform =
-            'translate(' + x + 'px,' + y + 'px)';
 
-        target.setAttribute('data-x', x);
-        target.setAttribute('data-y', y);
-    // target.textContent = Math.round(event.rect.width) + '\u00D7' + Math.round(event.rect.height);
-    });
-    
+
+        interact(".interact-resizable")
+            .resizable({
+                // resize from all edges and corners
+                edges: { left: true, right: true, bottom: true, top: true },
+
+                // keep the edges inside the parent
+                restrictEdges: {
+                    outer: 'parent',
+                    endOnly: true,
+                },
+
+                // minimum size
+                restrictSize: {
+                    min: { width: 100, height: 50 },
+                },
+
+                inertia: true,
+            })
+            .on('resizemove', function (event) {
+                var target = event.target,
+                    x = (parseFloat(target.getAttribute('data-x')) || 0),
+                    y = (parseFloat(target.getAttribute('data-y')) || 0);
+
+                // update the element's style
+                target.style.width = event.rect.width + 'px';
+                target.style.height = event.rect.height + 'px';
+
+                // translate when resizing from top or left edges
+                x += event.deltaRect.left;
+                y += event.deltaRect.top;
+
+                target.style.webkitTransform = target.style.transform =
+                    'translate(' + x + 'px,' + y + 'px)';
+
+                target.setAttribute('data-x', x);
+                target.setAttribute('data-y', y);
+                // target.textContent = Math.round(event.rect.width) + '\u00D7' + Math.round(event.rect.height);
+            });
+
 
         interact('.interact-drag')
-        .draggable({
-            onmove: window.dragMoveListener,
-            restrict: {
-            restriction: 'parent',
-            elementRect: { top: 0, left: 0, bottom: 1, right: 1 }
-            },
-        })
+            .draggable({
+                onmove: window.dragMoveListener,
+                restrict: {
+                    restriction: 'parent',
+                    elementRect: { top: 0, left: 0, bottom: 1, right: 1 }
+                },
+            })
         // target elements with the "draggable" class
         interact('.draggable')
-        .draggable({
-            // enable inertial throwing
-            inertia: true,
-            // keep the element within the area of it's parent
-            restrict: {
-                restriction: "parent",
-                endOnly: true,
-                elementRect: { top: 0, left: 0, bottom: 1, right: 1 }
-            },
-            // call this function on every dragmove event
-            onmove: dragMoveListener,
-            // call this function on every dragend event
-        });
-        function dragMoveListener (event) {
+            .draggable({
+                // enable inertial throwing
+                inertia: true,
+                // keep the element within the area of it's parent
+                restrict: {
+                    restriction: "parent",
+                    endOnly: true,
+                    elementRect: { top: 0, left: 0, bottom: 1, right: 1 }
+                },
+                // call this function on every dragmove event
+                onmove: dragMoveListener,
+                // call this function on every dragend event
+            });
+        function dragMoveListener(event) {
             var target = event.target,
                 x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx,
                 y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
             target.style.webkitTransform =
                 target.style.transform =
-                    'translate(' + x + 'px, ' + y + 'px)';
+                'translate(' + x + 'px, ' + y + 'px)';
             target.setAttribute('data-x', x);
             target.setAttribute('data-y', y);
         }
 
         function allowDrop(event) {
-        event.preventDefault();
-    }
+            event.preventDefault();
+        }
     </script>
 
 </body>
+
 </html>
