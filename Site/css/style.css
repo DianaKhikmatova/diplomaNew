@@ -112,7 +112,8 @@ button, .button {
 }
 
 .function-button {
-    width: 100%;
+    margin-left: 10%;
+    width: 80%;
     margin-bottom: 5px;
 }
 
@@ -125,7 +126,12 @@ button, .button {
     text-align: center;
     background-color: #F9AA32;
     color: #fff; 
-    border: 2px solid #F9AA32;;
+    border: 2px solid #F9AA32;
+    cursor: pointer;
+}
+.primary-button:hover {
+    background-color: #F8C471;
+    border-color: #F8C471;
 }
 .simple-text {
     text-align: center;
@@ -291,11 +297,13 @@ tr:nth-child(even) {
 }
 
 .library-container {
-    width: 80%;
+    width: 95%;
+    background-color: #fff;
+    border: 1px solid #D7DBDD;
 }
 .library-header {
-    width: 100%;
-    padding: 15px 20px;
+    width: 87%;
+    padding: 10px 15px;
     background-color: #D7DBDD;
     color: #17202A;
     border: 1px solid #aab7b8;
@@ -332,4 +340,31 @@ tr:nth-child(even) {
 }
 #user-image-container {
     margin-top: 20px;
+}
+
+.subtitle {
+    margin: 20px 0 10px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 18px;
+    font-weight: bold;
+    color: #F9AA32;
+}
+
+.display-visible {
+    display: inline-block;
+}
+
+.display-none {
+    display: none;
+}
+
+#user-image-container,
+#user-file-container {
+    float: left;
+    margin-left: 30px;
+}
+
+#user-file-container {
+    margin-top: 55px;
+    margin-left: 100px;
 }

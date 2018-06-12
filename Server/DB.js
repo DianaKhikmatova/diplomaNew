@@ -11,13 +11,12 @@ function Database() {
         user: 'root',
         password: '',
         database: 'sketch',
-        debug: true
+        debug: false
     });
 }
 
 Database.prototype.isValid = function(email, password, callback) {
     _pool.getConnection(function(err, connection){		
-        	console.log("password: " + password);
 			//checking existing if email and password
 			connection.query("SELECT * FROM user WHERE email=? AND password=?", [email, password], function(err, rows, fields) {
 			// ...
@@ -30,8 +29,6 @@ Database.prototype.isValid = function(email, password, callback) {
 
 Database.prototype.addNewUser = function(userName, email, password, callback) {
     _pool.getConnection(function(err, connection){		
-        	console.log(userName + " user");
-            console.log(password + " db");
             let role = "user";
 			connection.query("INSERT INTO User (name, email, password, role) VALUES (?, ?, ?, ?)", [userName, email, password, role], function(err, result) {
 			// ...
@@ -45,7 +42,6 @@ Database.prototype.addNewUser = function(userName, email, password, callback) {
 
 Database.prototype.addNewImage = function(imageName, imageContent, libraryId, callback) {
     _pool.getConnection(function(err, connection){		
-        	console.log(imageContent + " user");
 			connection.query("INSERT INTO image (name, content, library_id) VALUES (?, ?, ?)", [imageName, imageContent, libraryId], function(err, result) {
                 connection.release();
                 if (err) throw err;
@@ -59,7 +55,6 @@ Database.prototype.addNewFunction = function(functionName, functionContent, libr
 			connection.query("INSERT INTO function (name, content, library_id) VALUES (?, ?, ?)", [functionName, functionContent, libraryId], function(err, result) {
                 connection.release();
                 if (err) throw err;
-                console.log(result.insertId + ' DDDDDDDDDDBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB');
                 callback(result.insertId);
 			}.bind(this));			
     }.bind(this));
@@ -129,7 +124,6 @@ Database.prototype.getTableFile = function(id, callback) {
 
 Database.prototype.addNewLibrary = function(libraryName, descriptionName, callback) {
     _pool.getConnection(function(err, connection){		
-        	console.log(libraryName + " " +  descriptionName + " DB");
 			connection.query("INSERT INTO library (name, description) VALUES (?, ?)", [libraryName, descriptionName], function(err, result) {
                 connection.release();
                 if (err) throw err;

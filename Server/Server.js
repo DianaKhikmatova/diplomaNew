@@ -68,7 +68,6 @@ io.sockets.on('connection', function (socket) {
 	});
 
 	socket.on('addImageServer', function (data) {
-		console.log(data['libraryId'] + " server");
 		db.prototype.addNewImage(data['imageName'], data['imageContent'], data['libraryId'], function(answer){
 			socket.emit('addImageClient', { imageName: data['imageName'], imageContent: data['imageContent'], libraryId: data['libraryId'] });
 		});			
@@ -82,7 +81,6 @@ io.sockets.on('connection', function (socket) {
 
 	socket.on('addFileServer', function (data) {
 		db.prototype.addNewFile(data['fileName'], data['fileContent'], data['userId'], function(answer){
-			console.log(answer);
 			socket.emit('addFileClient', { fileName: data['fileName'], fileContent: data['fileContent'], fileId: data['userId'] });
 		});			
 	});

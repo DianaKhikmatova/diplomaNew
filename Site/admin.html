@@ -10,7 +10,7 @@
 	
 	<!-- !!! -->
 	<script src="https://cdn.socket.io/socket.io-1.2.1.js"></script>
-	<script src="./js/client.js"></script>
+	<script src="./js/client_admin.js"></script>
 	<!-- !!! -->
 
 	<style>
@@ -29,6 +29,7 @@
 		<input type="text" id="library-description" placeholder="Enter library description" class='input-text input-short'>
 		<input type='button' id='create-library' value='Create' onclick='createLibrary()' class='button primary-button'>
 	</div>
+	<p class="subtitle">Libraries</p>
 	<table id="libraries-table">
 		<thead>
 			<tr>
@@ -47,6 +48,7 @@
 	<input type="file" id="fileinput" value="Choose image"/ >
 	<input type='button' id='btnLoad' value='Load Image' class='button primary-button'>
 	<!-- <input type='button' id='btn-show' value='Show images' onclick='showImages()' class='button' primary-button> -->
+	<p class="subtitle">Images</p>
 	<table id="images-table">
 		<thead>
 			<tr>
@@ -63,6 +65,7 @@
 	<input type="file" id="fileinput-function" value="Choose function"/ >
 	<input type='button' id='load-function' value='Load Function' class='button primary-button'>
 	<!-- <input type='button' id='btn-show' value='Show images' onclick='showImages()' class='button' primary-button> -->
+	<p class="subtitle">Functions</p>
 	<table id="functions-table">
 		<thead>
 			<tr>

@@ -5,6 +5,20 @@ document.addEventListener('DOMContentLoaded', function () {
 },
 false);
 
+function collapse() {
+	let div = event.target.parentNode.parentNode.childNodes[3].childNodes[1];
+	let className = div.classList[0];
+	console.log(className);
+	if (className === 'display-visible') {
+		console.log('collapse');
+		div.classList.remove('display-visible');
+		div.classList.add('display-none');
+	} else {
+		div.classList.remove('display-none');
+		div.classList.add('display-visible');
+	}
+}
+
 function initializeListeners() {
 
 	interact(".interact-resizable")
@@ -285,12 +299,13 @@ function getImagesClient() {
 			libraryContainer.id = data[i]['id'];
 			let libraryHeader = document.createElement('div');
 			libraryHeader.classList.add('library-header');
+			libraryHeader.addEventListener('click', function() {
+				collapse();
+			}, false);
 			let libraryName = document.createElement('p');
 			libraryName.innerHTML = data[i]['name'];
 			libraryHeader.appendChild(libraryName);
 			libraryContainer.appendChild(libraryHeader);
-			let libraryContent = document.createElement('div');
-			libraryContainer.appendChild(libraryContent);
 			container.appendChild(libraryContainer);
 		}
 		let containers = document.getElementById('elements').childNodes;
@@ -298,6 +313,7 @@ function getImagesClient() {
 		for (let i = 3; i < containers.length; i++) {
 			//console.log(containers[i].id);
 			socket.emit('getImagesServer', {id: containers[i].id});
+			let div = document.createElement('div');
 			let c = 0;
 			socket.on('getImagesClient' + containers[i].id, function (data, content) {
 				//console.log(data.length);
@@ -307,19 +323,21 @@ function getImagesClient() {
 					// imageContainer.height = 60;
 					imageContainer.src = data[j]['content'];
 					//imageContainer.style.background = 'url("' + data[j]['content'] + '") no-repeat';
-					document.getElementById(containers[i].id).appendChild(imageContainer);
+					div.appendChild(imageContainer);
 					imageContainer.classList.add("drag");
 					imageContainer.classList.add("img-container");
 					imageContainer.classList.add("ui-draggable");
 					imageContainer.id = data[j]['id'] + 'image';
 				}
-
 				// div.id = imgsArray[i];
 				// div.style.background = 'url("img/' + imgsArray[i] + '") no-repeat';
 				// document.getElementById("elements").appendChild(div);
 				initializeListeners();
-				
 			});
+
+			div.classList.add('display-visible');
+			document.getElementById(containers[i].id).appendChild(div);
+
 			socket.emit('getFunctionsServer', {id: containers[i].id});
 			socket.on('getFunctionsClient' + containers[i].id, function (data, content) {
 				console.log(data.length);

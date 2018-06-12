@@ -14,6 +14,7 @@ function getUserLibrary(id) {
 	var socket = io.connect('http://localhost:8081');
 	socket.emit('getUserLibraryServer', {id: id} );		
 	socket.on('getUserLibraryClient', function (data, content) {
+		console.log(data);
 		libId =  data[0]['id'];
 		showImages(libId);
 		showFiles(window.localStorage.getItem('id'));
